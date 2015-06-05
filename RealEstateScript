@@ -23,7 +23,7 @@ curs = conn.cursor()
 curs.execute('''drop table if exists Sacramento''')
 
 curs.execute('''create table Sacramento
-	(street text, city text, zipcode text, beds text, squarefeet text, type text, saledate text, price text, latitude text, longitude text)''')
+	(street text, city text, zipcode text, beds integer, squarefeet integer, type text, saledate text, price float, latitude float, longitude float)''')
 reader = csv.reader(open('Sacramentorealestatetransactions.csv', 'rU'), dialect=csv.excel_tab, delimiter=',')
 
 counter = 0
