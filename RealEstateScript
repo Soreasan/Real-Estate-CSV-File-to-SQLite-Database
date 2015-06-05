@@ -1,0 +1,37 @@
+#!/usr/bin/python
+#(This computer[Linux Mint Debian 17] uses python 2.7)
+# www.cslearner.com
+# I got the sample .csv file from:
+# http://support.spatialkey.com/spatialkey-sample-csv-data/
+# I downloaded the one titled "Real estate transactions"
+# http://samplecsvs.s3.amazonaws.com/Sacramentorealestatetransactions.csv 
+
+#let's us create a database with SQLite
+import sqlite3
+
+#needed to interact with .csv files
+import csv
+
+#If the database exists we connect to it.  
+#if it doesn't exist it will automatically create it
+conn = sqlite3.connect('RealEstate.db')
+
+#Creates a cursor or context from which we'll execute our SQLite commands
+curs = conn.cursor()
+
+#If the "Sacramento" table exists, delete it
+curs.execute('''drop table if exists Sacramento''')
+
+curs.execute('''create table Sacramento
+	(street text, city text, zipcode text, beds text, squarefeet text, type text, saledate text, price text, latitude text, longitude text)''')
+reader = csv.reader(open('Sacramentorealestatetransactions.csv', 'rU'), dialect=csv.excel_tab, delimiter=',')
+
+counter = 0
+for row in reader:
+	counter += 1
+	if counter == 1:
+		continue
+	r = (row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9])
+	curs.execute('''insert into Sacramento (street,city,zipcode,beds,squarefeet,type,saledate,price,latitude,longitude)
+		values (?,?,?,?,?,?,?,?,?,?)''', r)
+conn.commit()
