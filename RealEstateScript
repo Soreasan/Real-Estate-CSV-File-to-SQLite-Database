@@ -23,15 +23,15 @@ curs = conn.cursor()
 curs.execute('''drop table if exists Sacramento''')
 
 curs.execute('''create table Sacramento
-	(street text, city text, zipcode text, beds integer, squarefeet integer, type text, saledate text, price float, latitude float, longitude float)''')
-reader = csv.reader(open('Sacramentorealestatetransactions.csv', 'rU'), dialect=csv.excel_tab, delimiter=',')
+	(street text, city text, zipcode text, state text, beds integer, baths integer, squarefeet integer, type text, saledate text, price int, latitude real, longitude real)''')
+reader = csv.reader(open('Sacramentorealestatetransactions.csv', 'rU'), dialect=csv.excel_tab, delimiter=',', quotechar='"')
 
 counter = 0
 for row in reader:
 	counter += 1
 	if counter == 1:
 		continue
-	r = (row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9])
-	curs.execute('''insert into Sacramento (street,city,zipcode,beds,squarefeet,type,saledate,price,latitude,longitude)
-		values (?,?,?,?,?,?,?,?,?,?)''', r)
+	r = (row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11])
+	curs.execute('''insert into Sacramento (street,city,zipcode,state,beds,baths,squarefeet,type,saledate,price,latitude,longitude)
+		values (?,?,?,?,?,?,?,?,?,?,?,?)''', r)
 conn.commit()
