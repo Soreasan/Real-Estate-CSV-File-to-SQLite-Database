@@ -1,0 +1,2 @@
+echo "How many houses have 2 beds and 1 baths?"
+sqlite3 -column RealEstate.db 'select COUNT(*)  from Sacramento where beds = 2 and baths = 1;'
